@@ -1,0 +1,239 @@
+ html { scroll-behavior: smooth; }
+        
+        nav {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #1d76bb, #155a8c);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            transform: translateY(0);
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #000 0%, #111 100%);
+            position: relative;
+        }
+        
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(29, 118, 187, 0.1) 0%, transparent 40%);
+            pointer-events: none;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #1d76bb, #155a8c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: linear-gradient(90deg, #1d76bb, #155a8c);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(29, 118, 187, 0.3);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.7s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .input-field {
+            background: rgba(30, 30, 30, 0.7);
+            border: 1px solid rgba(29, 118, 187, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            background: rgba(40, 40, 40, 0.9);
+            border-color: #1d76bb;
+            box-shadow: 0 0 0 3px rgba(29, 118, 187, 0.1);
+            outline: none;
+        }
+        
+        .client-logo {
+            filter: grayscale(100%) brightness(0.5);
+            transition: all 0.3s ease;
+            opacity: 0.6;
+        }
+        
+        .client-logo:hover {
+            filter: grayscale(0%) brightness(1);
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        
+        .client-logo img {
+            max-width: 100%;
+            height: auto;
+            max-height: 40px;
+        }
+        
+        .checkbox-container {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .checkbox-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background: rgba(30, 30, 30, 0.7);
+            border: 1px solid rgba(29, 118, 187, 0.3);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-container input:checked ~ .checkmark {
+            background: #1d76bb;
+            border-color: #1d76bb;
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        .checkbox-container input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .checkbox-container .checkmark:after {
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        .spinner {
+            border: 3px solid rgba(30, 30, 30, 0.7);
+            border-top: 3px solid #1d76bb;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        .image-container {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(29, 118, 187, 0.2);
+        }
+        
+        .image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(29, 118, 187, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Custom blue color classes */
+        .text-blue-primary {
+            color: #1d76bb;
+        }
+        
+        .link-blue {
+            color: #1d76bb;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .link-blue:hover {
+            color: #4a9cd8;
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .client-logo img {
+            max-height: 30px;
+            }
+            
+            .image-container {
+                max-width: 80%;
+                margin: 0 auto;
+            }
+        }
