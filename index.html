@@ -7,17 +7,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Smooth scrolling behavior for anchor links */
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
         
-        /* Navigation bar styling with scroll effect */
         nav {
             transition: all 0.3s ease;
         }
         
-        /* Navigation links hover effects */
         .nav-link {
             position: relative;
             transition: color 0.3s ease;
@@ -38,7 +33,6 @@
             width: 100%;
         }
         
-        /* Mobile menu animation */
         .mobile-menu {
             transform: translateY(-100%);
             transition: transform 0.3s ease;
@@ -48,7 +42,6 @@
             transform: translateY(0);
         }
         
-        /* Hero section background with gradient overlay */
         .hero-bg {
             background: linear-gradient(135deg, #000 0%, #111 100%);
             position: relative;
@@ -65,7 +58,6 @@
             pointer-events: none;
         }
         
-        /* Gradient text effects */
         .gradient-text {
             background: linear-gradient(90deg, #9333ea, #7c3aed);
             -webkit-background-clip: text;
@@ -73,7 +65,6 @@
             background-clip: text;
         }
         
-        /* Button hover animations */
         .btn-primary {
             position: relative;
             overflow: hidden;
@@ -101,7 +92,6 @@
             left: 100%;
         }
         
-        /* Input field styling */
         .input-field {
             background: rgba(30, 30, 30, 0.7);
             border: 1px solid rgba(147, 51, 234, 0.3);
@@ -115,7 +105,6 @@
             outline: none;
         }
         
-        /* Client logo styling and hover effects */
         .client-logo {
             filter: grayscale(100%) brightness(0.5);
             transition: all 0.3s ease;
@@ -134,7 +123,6 @@
             max-height: 40px;
         }
         
-        /* Form elements styling */
         .checkbox-container {
             position: relative;
             padding-left: 30px;
@@ -187,7 +175,6 @@
             transform: rotate(45deg);
         }
         
-        /* Loading animation */
         .spinner {
             border: 3px solid rgba(30, 30, 30, 0.7);
             border-top: 3px solid #9333ea;
@@ -205,7 +192,6 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Additional animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -215,10 +201,33 @@
             animation: fadeIn 0.8s ease forwards;
         }
         
-        /* Responsive adjustments */
+        .image-container {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(147, 51, 234, 0.2);
+        }
+        
+        .image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
         @media (max-width: 768px) {
             .client-logo img {
                 max-height: 30px;
+            }
+            
+            .image-container {
+                max-width: 80%;
+                margin: 0 auto;
             }
         }
     </style>
@@ -229,29 +238,25 @@
     <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800">
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
-                <!-- Logo -->
                 <a href="#" class="flex items-center space-x-2">
                     <span class="text-2xl font-bold gradient-text">Material Tailwind</span>
                 </a>
                 
-                <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#page" class="nav-link text-gray-300 hover:text-white">About</a>
-                    <a href="#account" class="nav-link text-gray-300 hover:text-white">Project</a>
-                    <a href="#docs" class="nav-link text-gray-300 hover:text-white">Contact me</a>
+                    <a href="#page" class="nav-link text-gray-300 hover:text-white">Page</a>
+                    <a href="#account" class="nav-link text-gray-300 hover:text-white">Account</a>
+                    <a href="#docs" class="nav-link text-gray-300 hover:text-white">Docs</a>
                     <button class="btn-primary px-6 py-2 rounded-full text-white font-medium">
                         SIGN IN
                     </button>
                 </div>
                 
-                <!-- Mobile Menu Button -->
                 <button class="md:hidden text-white" onclick="toggleMobileMenu()">
                     <i class="fas fa-bars text-2xl"></i>
                 </button>
             </div>
         </div>
         
-        <!-- Mobile Menu -->
         <div class="mobile-menu md:hidden bg-black border-t border-gray-800">
             <div class="container mx-auto px-6 py-4 space-y-4">
                 <a href="#page" class="block text-gray-300 hover:text-white py-2">Page</a>
@@ -266,40 +271,58 @@
     
     <!-- Hero Section -->
     <section class="hero-bg min-h-screen flex items-center justify-center pt-20 pb-16">
-        <div class="container mx-auto px-6 text-center animate-fade-in">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-                Welcome to my Web<br>Development Portfolio!
-            </h1>
-            
-            <p class="text-xl md:text-2xl text-gray-400 mb-8 max-w-3xl mx-auto font-light">
-                I'm Lerato Diane, a passionate web developer and designer base in SA. Here, you'll get a glimpse of my journey in the world of web development, where creativity meets functionality.
-            </p>
-            
-            <!-- Email Form -->
-            <div class="max-w-md mx-auto mb-8">
-                <div class="flex flex-col sm:flex-row gap-4 mb-4">
-                    <input 
-                        type="email" 
-                        id="email" 
-                        placeholder="Enter your email" 
-                        class="input-field flex-1 px-4 py-3 rounded-full text-white placeholder-gray-400"
-                    >
-                    <button 
-                        class="btn-primary px-8 py-3 rounded-full text-white font-medium whitespace-nowrap"
-                        onclick="handleSubmit()"
-                    >
-                        <span id="button-text">REQUIRE OFFER</span>
-                    </button>
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16">
+                
+                <!-- Left Side: Text Content -->
+                <div class="flex-1 text-left animate-fade-in">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                        Welcome to my Web<br>Development Portfolio!
+                    </h1>
+                    
+                    <p class="text-xl md:text-2xl text-gray-400 mb-8 font-light">
+                        I'm Lerato Diane, a passionate web developer and Designer based in SA. Here, you'll get a glimpse of my journey in the world of web development and design, where creativity meets functionality.
+                    </p>
+                    
+                    <!-- Email Form -->
+                    <div class="max-w-lg mb-8">
+                        <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                            <input 
+                                type="email" 
+                                id="email" 
+                                placeholder="Enter your email" 
+                                class="input-field flex-1 px-4 py-3 rounded-full text-white placeholder-gray-400"
+                            >
+                            <button 
+                                class="btn-primary px-8 py-3 rounded-full text-white font-medium whitespace-nowrap"
+                                onclick="handleSubmit()"
+                            >
+                                <span id="button-text">REQUIRE OFFER</span>
+                            </button>
+                        </div>
+                        
+                        <label class="checkbox-container text-sm text-gray-400 flex items-center">
+                            <input type="checkbox" id="terms">
+                            <span class="checkmark"></span>
+                            <span>Read my <a href="#" class="text-purple-400 hover:text-purple-300 underline-offset-2 hover:underline">Terms and Conditions</a></span>
+                        </label>
+                    </div>
+                    
+                    <p id="form-message" class="text-sm mt-4"></p>
                 </div>
                 
-                <label class="checkbox-container text-sm text-gray-400 flex items-center justify-center">
-                    <input type="checkbox" id="terms">
-                    <span class="checkmark"></span>
-                    <span>Read my <a href="#" class="text-purple-400 hover:text-purple-300 underline-offset-2 hover:underline">Terms and Conditions</a></span>
-                </label>
+                <!-- Right Side: Photo -->
+                <div class="flex-1 flex justify-center items-center">
+                    <div class="image-container w-full max-w-md aspect-square flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800">
+                        <div class="text-center p-8 z-10 relative">
+                            <i class="fas fa-code text-6xl md:text-8xl text-purple-500 mb-4"></i>
+                            <p class="text-gray-400 text-lg">Your Photo Here</p>
+                            <p class="text-gray-500 text-sm mt-2">Developer Portfolio Image</p>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
-            
-            <p id="form-message" class="text-sm mt-4"></p>
         </div>
     </section>
     
@@ -334,13 +357,11 @@
     </section>
     
     <script>
-        // Mobile menu toggle functionality
         function toggleMobileMenu() {
             const mobileMenu = document.querySelector('.mobile-menu');
             mobileMenu.classList.toggle('active');
         }
         
-        // Form submission with validation
         function handleSubmit() {
             const email = document.getElementById('email').value;
             const terms = document.getElementById('terms').checked;
@@ -348,10 +369,8 @@
             const button = document.querySelector('.btn-primary');
             const buttonText = document.getElementById('button-text');
             
-            // Reset message
             messageEl.className = 'text-sm mt-4';
             
-            // Validation
             if (!email) {
                 messageEl.textContent = 'Please enter your email address.';
                 messageEl.classList.add('text-red-400');
@@ -364,5 +383,9 @@
                 return;
             }
             
-            // Email validation
-            const emailRegex = /^
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email)) {
+                messageEl.textContent = 'Please enter a valid email address.';
+                messageEl.classList.add('text-red-400');
+                return;
+            };
