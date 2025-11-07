@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Portfolio - Lily Smith</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Smooth scrolling behavior for anchor links */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Navigation bar styling with scroll effect */
+        nav {
+            transition: all 0.3s ease;
+        }
+        
+        /* Navigation links hover effects */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #9333ea, #7c3aed);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Mobile menu animation */
+        .mobile-menu {
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            transform: translateY(0);
+        }
+        
+        /* Hero section background with gradient overlay */
+        .hero-bg {
+            background: linear-gradient(135deg, #000 0%, #111 100%);
+            position: relative;
+        }
+        
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(147, 51, 234, 0.1) 0%, transparent 40%);
+            pointer-events: none;
+        }
+        
+        /* Gradient text effects */
+        .gradient-text {
+            background: linear-gradient(90deg, #9333ea, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Button hover animations */
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: linear-gradient(90deg, #9333ea, #7c3aed);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(147, 51, 234, 0.3);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.7s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        /* Input field styling */
+        .input-field {
+            background: rgba(30, 30, 30, 0.7);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            background: rgba(40, 40, 40, 0.9);
+            border-color: #9333ea;
+            box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.1);
+            outline: none;
+        }
+        
+        /* Client logo styling and hover effects */
+        .client-logo {
+            filter: grayscale(100%) brightness(0.5);
+            transition: all 0.3s ease;
+            opacity: 0.6;
+        }
+        
+        .client-logo:hover {
+            filter: grayscale(0%) brightness(1);
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        
+        .client-logo img {
+            max-width: 100%;
+            height: auto;
+            max-height: 40px;
+        }
+        
+        /* Form elements styling */
+        .checkbox-container {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .checkbox-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background: rgba(30, 30, 30, 0.7);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-container input:checked ~ .checkmark {
+            background: #9333ea;
+            border-color: #9333ea;
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        .checkbox-container input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .checkbox-container .checkmark:after {
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        /* Loading animation */
+        .spinner {
+            border: 3px solid rgba(30, 30, 30, 0.7);
+            border-top: 3px solid #9333ea;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Additional animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .client-logo img {
+                max-height: 30px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-black text-white overflow-x-hidden">
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="#" class="flex items-center space-x-2">
+                    <span class="text-2xl font-bold gradient-text">Material Tailwind</span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#page" class="nav-link text-gray-300 hover:text-white">About</a>
+                    <a href="#account" class="nav-link text-gray-300 hover:text-white">Project</a>
+                    <a href="#docs" class="nav-link text-gray-300 hover:text-white">Contact me</a>
+                    <button class="btn-primary px-6 py-2 rounded-full text-white font-medium">
+                        SIGN IN
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-white" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu md:hidden bg-black border-t border-gray-800">
+            <div class="container mx-auto px-6 py-4 space-y-4">
+                <a href="#page" class="block text-gray-300 hover:text-white py-2">Page</a>
+                <a href="#account" class="block text-gray-300 hover:text-white py-2">Account</a>
+                <a href="#docs" class="block text-gray-300 hover:text-white py-2">Docs</a>
+                <button class="btn-primary w-full py-2 rounded-full text-white font-medium">
+                    SIGN IN
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center justify-center pt-20 pb-16">
+        <div class="container mx-auto px-6 text-center animate-fade-in">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                Welcome to my Web<br>Development Portfolio!
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-gray-400 mb-8 max-w-3xl mx-auto font-light">
+                I'm Lerato Diane, a passionate web developer and designer base in SA. Here, you'll get a glimpse of my journey in the world of web development, where creativity meets functionality.
+            </p>
+            
+            <!-- Email Form -->
+            <div class="max-w-md mx-auto mb-8">
+                <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                    <input 
+                        type="email" 
+                        id="email" 
+                        placeholder="Enter your email" 
+                        class="input-field flex-1 px-4 py-3 rounded-full text-white placeholder-gray-400"
+                    >
+                    <button 
+                        class="btn-primary px-8 py-3 rounded-full text-white font-medium whitespace-nowrap"
+                        onclick="handleSubmit()"
+                    >
+                        <span id="button-text">REQUIRE OFFER</span>
+                    </button>
+                </div>
+                
+                <label class="checkbox-container text-sm text-gray-400 flex items-center justify-center">
+                    <input type="checkbox" id="terms">
+                    <span class="checkmark"></span>
+                    <span>Read my <a href="#" class="text-purple-400 hover:text-purple-300 underline-offset-2 hover:underline">Terms and Conditions</a></span>
+                </label>
+            </div>
+            
+            <p id="form-message" class="text-sm mt-4"></p>
+        </div>
+    </section>
+    
+    <!-- Clients Section -->
+    <section class="py-16 bg-black">
+        <div class="container mx-auto px-6">
+            <h2 class="text-2xl md:text-3xl font-semibold text-center mb-12 text-gray-400">
+                My awesome clients
+            </h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center max-w-5xl mx-auto">
+                <div class="client-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" alt="Spotify" class="h-10">
+                </div>
+                <div class="client-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png" alt="Pinterest" class="h-10">
+                </div>
+                <div class="client-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="h-8">
+                </div>
+                <div class="client-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/Coinbase_logo.svg" alt="Coinbase" class="h-8">
+                </div>
+                <div class="client-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon" class="h-8">
+                </div>
+                <div class="client-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" class="h-10">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <script>
+        // Mobile menu toggle functionality
+        function toggleMobileMenu() {
+            const mobileMenu = document.querySelector('.mobile-menu');
+            mobileMenu.classList.toggle('active');
+        }
+        
+        // Form submission with validation
+        function handleSubmit() {
+            const email = document.getElementById('email').value;
+            const terms = document.getElementById('terms').checked;
+            const messageEl = document.getElementById('form-message');
+            const button = document.querySelector('.btn-primary');
+            const buttonText = document.getElementById('button-text');
+            
+            // Reset message
+            messageEl.className = 'text-sm mt-4';
+            
+            // Validation
+            if (!email) {
+                messageEl.textContent = 'Please enter your email address.';
+                messageEl.classList.add('text-red-400');
+                return;
+            }
+            
+            if (!terms) {
+                messageEl.textContent = 'Please accept the Terms and Conditions.';
+                messageEl.classList.add('text-red-400');
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^
