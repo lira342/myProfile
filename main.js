@@ -29,3 +29,7 @@
                 messageEl.textContent = 'Please enter a valid email address.';
                 messageEl.classList.add('text-red-400');
                 return;
+
+            }
+
+        
