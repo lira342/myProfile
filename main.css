@@ -416,8 +416,9 @@
       color: #555;
     }
 
-    projects-item img {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 40px;
+    .container{
+      display: flex;
+      gap: 20px;
     }
+
+  }
