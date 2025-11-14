@@ -5,25 +5,388 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio-Lerato</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-   
+    <style>
+        /* CUSTOM ANIMATED CURSOR */
+        * { cursor: none; }
+        
+        .cursor {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .cursor-follower {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.3s ease;
+        }
+        
+        /* EXISTING STYLES (CORRECTED) */
+        html { scroll-behavior: smooth; }
+        
+        nav {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #1d76bb, #155a8c);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            transform: translateY(0);
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #000 0%, #111 100%);
+            position: relative;
+        }
+        
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(29, 118, 187, 0.1) 0%, transparent 40%);
+            pointer-events: none;
+        }
+        
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: linear-gradient(90deg, #1d76bb, #155a8c);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(29, 118, 187, 0.3);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.7s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .input-field {
+            background: rgba(30, 30, 30, 0.7);
+            border: 1px solid rgba(29, 118, 187, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            background: rgba(40, 40, 40, 0.9);
+            border-color: #1d76bb;
+            box-shadow: 0 0 0 3px rgba(29, 118, 187, 0.1);
+            outline: none;
+        }
+        
+        .client-logo {
+            filter: grayscale(100%) brightness(0.5);
+            transition: all 0.3s ease;
+            opacity: 0.6;
+        }
+        
+        .client-logo:hover {
+            filter: grayscale(0%) brightness(1);
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        
+        .checkbox-container {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .checkbox-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background: rgba(30, 30, 30, 0.7);
+            border: 1px solid rgba(29, 118, 187, 0.3);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-container input:checked ~ .checkmark {
+            background: #1d76bb;
+            border-color: #1d76bb;
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        .checkbox-container input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .spinner {
+            border: 3px solid rgba(30, 30, 30, 0.7);
+            border-top: 3px solid #1d76bb;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        .image-container {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(29, 118, 187, 0.2);
+        }
+        
+        .image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(29, 118, 187, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .link-blue {
+            color: #1d76bb;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .link-blue:hover {
+            color: #4a9cd8;
+            text-decoration: underline;
+        }
+        
+        /* Skills Section */
+        .skills-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .skill-item {
+            background: rgba(74, 156, 216, 0.1);
+            padding: 30px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .skill-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .skill-icon {
+            font-size: 2em;
+            margin-bottom: 15px;
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            background-color: #1d76bb;
+            color: #fff;
+            border-radius: 50%;
+        }
+        
+        /* Projects Section */
+        .projects-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+            justify-content: center;
+            align-items: start;
+        }
+        
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(29, 118, 187, 0.2);
+        }
+        
+        .project-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .project-info {
+            padding: 20px 25px;
+        }
+        
+        .project-info h3 {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        
+        .project-info p {
+            color: #bbb;
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .see-details {
+            display: inline-block;
+            background: #1d76bb;
+            color: #fff;
+            font-size: 0.7em;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 5px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background 0.3s ease;
+        }
+        
+        .see-details:hover {
+            background: #155a8c;
+        }
+        
+        @media (max-width: 768px) {
+            .client-logo img {
+                max-height: 30px;
+            }
+            
+            .image-container {
+                max-width: 80%;
+                margin: 0 auto;
+            }
+            
+            .project-card img {
+                height: 160px;
+            }
+        }
+    </style>
 </head>
 <body class="bg-black text-white overflow-x-hidden">
+    
+    <!-- Animated Cursor Elements -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
     
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800">
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <a href="index.html" class="h-8 w-auto md:h-12">
-                    <img src="images/lerato logo5.png"alt="Portfolio-Lerato" class="h-8 w-auto">
-                    </span>
+                    <img src="images/lerato logo5.png" alt="Portfolio-Lerato" class="h-8 w-auto">
                 </a>
                 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#about me" class="nav-link text-gray-300 hover:text-white">About</a>
-                    <a href="#Projects" class="nav-link text-gray-300 hover:text-white">Projects</a>
-                    <a href="#Contact" class="nav-link text-gray-300 hover:text-white">Contact</a>
+                    <a href="#about-me" class="nav-link text-gray-300 hover:text-white">About</a>
+                    <a href="#projects" class="nav-link text-gray-300 hover:text-white">Projects</a>
+                    <a href="#contact" class="nav-link text-gray-300 hover:text-white">Contact</a>
                 </div>
                 
                 <button class="md:hidden text-white" onclick="toggleMobileMenu()">
@@ -34,13 +397,12 @@
         
         <div class="mobile-menu md:hidden bg-black border-t border-gray-800">
             <div class="container mx-auto px-6 py-4 space-y-4">
-                <a href="#about me" class="block text-gray-300 hover:text-white py-2">About</a>
-                <a href="#Projects" class="block text-gray-300 hover:text-white py-2">Projects</a>
-                <a href="#Contact" class="block text-gray-300 hover:text-white py-2">Contact</a>
+                <a href="#about-me" class="block text-gray-300 hover:text-white py-2">About</a>
+                <a href="#projects" class="block text-gray-300 hover:text-white py-2">Projects</a>
+                <a href="#contact" class="block text-gray-300 hover:text-white py-2">Contact</a>
             </div>
         </div>
     </nav>
-    
     
     <!-- Hero Section -->
     <section class="hero-bg min-h-screen flex items-center justify-center pt-20 pb-16">
@@ -77,7 +439,7 @@
                         <label class="checkbox-container text-sm text-gray-400 flex items-center">
                             <input type="checkbox" id="terms">
                             <span class="checkmark"></span>
-                            <span>Read my <a href="#" class="link-blue underline-offset-2">Terms and Conditions</a></span>
+                            <span>Read my <a href="#" class="link-blue">Terms and Conditions</a></span>
                         </label>
                     </div>
                     
@@ -85,125 +447,98 @@
                 </div>
                 
                 <!-- Right Side: Photo -->
-               <div class="flex-1 flex justify-center items-center">
-    <div class="image-container w-full max-w-md aspect-square flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800">
-        <img src="/images/Photo%20from%20LERATO%20DIANE.jpg" alt="LERATO DIANE" class="w-full h-full object-cover rounded-lg">
-    </div>
-</div>
+                <div class="flex-1 flex justify-center items-center">
+                    <div class="image-container w-full max-w-md aspect-square flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800">
+                        <img src="/images/Photo%20from%20LERATO%20DIANE.jpg" alt="LERATO DIANE" class="w-full h-full object-cover rounded-lg">
+                    </div>
+                </div>
                 
-           
-
-
+            </div>
+        </div>
     </section>
 
     <!-- About Section -->
-    <section class="about me">
-    <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight text-center">About Me</h1>
-
-    <h2 class="text-center">I'm not just a developer; I'm a digital dreamweaver. 
-        Crafting immersive online experiences and designing logos and corporate identity isn't just my job, it's my calling.
-         I also create print materials to keep your brand consistent everywhere. Discover below how I can help you.</h2>
+    <section id="about-me" class="py-20">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">About Me</h1>
+            <h2 class="text-xl text-gray-400 max-w-3xl mx-auto">
+                I'm not just a developer; I'm a digital dreamweaver. Crafting immersive online experiences and designing logos and corporate identity isn't just my job, it's my calling. I also create print materials to keep your brand consistent everywhere. Discover below how I can help you.
+            </h2>
+        </div>
     </section>
 
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-    <!-- what i do Section -->
-    <section class="what i do">
-         <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight text-center">What i do</h1>
-                    
-
-    <p class="text-center">I create websites, i also design logos, corporate identity, brochure design<p>
-<br>
-    <div class="skills-grid">
-      <div class="skill-item">
-        <div class="skill-icon"><i class="fas fa-laptop-code"></i></div>
-        </a>
-        <h3>Web Development</h3>
-        <p>Creating beautiful and functional web experiences using the latest technologies and best practices.</p>
-      </div>
-
-      <div class="skill-item">
-        <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
-        <h3>UI/UX Design</h3>
-        <p>Designing and developing responsive and intuitive mobile apps.</p>
-      </div>
-
-
-      <div class="skill-item">
-        <div class="skill-icon"><i class="fas fa-bolt"></i></div>
-        <h3>Logo design</h3>
-        <p>Creating logos for businesses or individuals.</p>
-      </div>
-
-      <div class="skill-item">
-        <div class="skill-icon"><i class="fas fa-user-check"></i></div>
-        <h3>Corporate identity</h3>
-        <p>Designing business card, Letterhead and promotional items for businesses/companies.</p>
-      </div>
-
-    </div>
-        </section>
-     
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <!-- projects Section -->    
-     <section class="my projects">
-        <div class="container">
-      <h2 class="text-4xl md:text-6xl font-bold mb-6 leading-tight text-center">My Projects</h2>
-    <p class="text-center">Whether you have a mobile app idea that needs to come to life or a website that requires a facelift, I'm here to turn your digital dreams into reality.</p>
-   
-    <br>
-    <br>
-    <br>
-
-     <div class="projects-grid">
-      <div class="projects-item">
-          <a href="/images/Screenshot 2025-10-31 143226.png">
-            <img src="/images/Screenshot 2025-10-31 143226.png" width="30%" 
-         height="150" alt="website project">
-          </a>
+    <!-- What I Do Section -->
+    <section class="skills-section">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl md:text-6xl font-bold mb-6 leading-tight text-center">What I Do</h2>
+            <p class="text-center text-gray-400">I create websites, i also design logos, corporate identity, brochure design</p>
+            
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <div class="skill-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3>Web Development</h3>
+                    <p>Creating beautiful and functional web experiences using the latest technologies and best practices.</p>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>UI/UX Design</h3>
+                    <p>Designing and developing responsive and intuitive mobile apps.</p>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>Logo design</h3>
+                    <p>Creating logos for businesses or individuals.</p>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-icon"><i class="fas fa-user-check"></i></div>
+                    <h3>Corporate identity</h3>
+                    <p>Designing business card, Letterhead and promotional items for businesses/companies.</p>
+                </div>
+            </div>
         </div>
-        </a>
-        <h3>Web Development</h3>
-        <p>Creating beautiful and functional web experiences using the latest technologies and best practices.</p>
-      </div>
+    </section>
 
-      <div class="projects-item">
-         <a href="/images/Screenshot 2025-10-23 011120.png">
-            <img src="images/Screenshot 2025-10-23 011120.png" width="30%" 
-         height="150" alt="ui/ux">
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl md:text-6xl font-bold mb-6 leading-tight text-center">My Projects</h2>
+            <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">
+                Whether you have a mobile app idea that needs to come to life or a website that requires a facelift, I'm here to turn your digital dreams into reality.
+            </p>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <img src="/images/Screenshot%202025-10-31%20143226.png" alt="website project">
+                    <div class="project-info">
+                        <h3>Web Development</h3>
+                        <p>Creating beautiful and functional web experiences using the latest technologies and best practices.</p>
+                        <a href="#" class="see-details">See Details</a>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <img src="images/Screenshot%202025-10-23%20011120.png" alt="ui/ux">
+                    <div class="project-info">
+                        <h3>UI/UX Design</h3>
+                        <p>Designing and developing responsive and intuitive mobile apps.</p>
+                        <a href="#" class="see-details">See Details</a>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <img src="images/Screenshot%202025-10-31%20145359.png" alt="logo design">
+                    <div class="project-info">
+                        <h3>Logo Design</h3>
+                        <p>Creating logos for businesses or individuals.</p>
+                        <a href="#" class="see-details">See Details</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <h3>UI/UX Design</h3>
-        <p>Designing and developing responsive and intuitive mobile apps.</p>
-      </div>
-
-
-      <div class="projects-item">
-        
-                <a href="/images/">
-                <img src="images/Screenshot 2025-10-31 145359.png" alt="">
-        </div>
-        <h3>Logo design</h3>
-        <p>Creating logos for businesses or individuals.</p>
-      </div>
-    </div>
-</div>
-     </section>
-    
-
-    <br>
-    <br>
-    <br>
+    </section>
 
     <!-- Clients Section -->
     <section class="py-16 bg-black">
@@ -214,13 +549,13 @@
             
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center max-w-5xl mx-auto">
                 <div class="client-logo">
-                    <img src="/images/Nemisa-logo-1.png" alt="gOOGLE" class="h-18">
+                    <img src="/images/Nemisa-logo-1.png" alt="Nemisa" class="h-12">
                 </div>
                 <div class="client-logo">
-                    <img src="/images/indigo-logo.png" alt="Pinterest" class="h-20">
+                    <img src="/images/indigo-logo.png" alt="Indigo" class="h-12">
                 </div>
                 <div class="client-logo">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="h-18">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="h-12">
                 </div>
                 <div class="client-logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/Coinbase_logo.svg" alt="Coinbase" class="h-8">
@@ -235,7 +570,92 @@
         </div>
     </section>
 
-        <script src="main.js"></script>
-    
-  
-       
+    <!-- Footer -->
+    <footer id="contact" class="py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-400">© 2025 Portfolio-Lerato. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // MOBILE MENU TOGGLE
+        function toggleMobileMenu() {
+            const mobileMenu = document.querySelector('.mobile-menu');
+            mobileMenu.classList.toggle('active');
+        }
+        
+        // FORM SUBMISSION
+        function handleSubmit() {
+            const email = document.getElementById('email').value;
+            const terms = document.getElementById('terms').checked;
+            const messageEl = document.getElementById('form-message');
+            const buttonText = document.getElementById('button-text');
+            
+            messageEl.className = 'text-sm mt-4';
+            
+            if (!email) {
+                messageEl.textContent = 'Please enter your email address.';
+                messageEl.classList.add('text-red-400');
+                return;
+            }
+            
+            if (!terms) {
+                messageEl.textContent = 'Please accept the Terms and Conditions.';
+                messageEl.classList.add('text-red-400');
+                return;
+            }
+            
+            const emailRegex = /^\S+@\S+\.\S+$/;
+            if (!emailRegex.test(email)) {  
+                messageEl.textContent = 'Please enter a valid email address.';
+                messageEl.classList.add('text-red-400');
+                return;
+            }
+            
+            // Success simulation
+            messageEl.textContent = 'Thank you! I will contact you soon.';
+            messageEl.classList.add('text-green-400');
+        }
+        
+        // ANIMATED CURSOR
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+        
+        let mouseX = 0;
+        let mouseY = 0;
+        let followerX = 0;
+        let followerY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        
+        function animateCursor() {
+            followerX += (mouseX - followerX) * 0.1;
+            followerY += (mouseY - followerY) * 0.1;
+            
+            cursor.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
+            follower.style.transform = `translate(${followerX - 15}px, ${followerY - 15}px)`;
+            
+            requestAnimationFrame(animateCursor);
+        }
+        
+        animateCursor();
+        
+        // HOVER EFFECTS
+        const interactiveElements = document.querySelectorAll('a, button, .project-card, .skill-item');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(1.8)';
+                follower.style.transform = 'scale(1.5)';
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                follower.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
