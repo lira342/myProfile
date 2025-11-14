@@ -1,7 +1,7 @@
  html { scroll-behavior: smooth; }
         
         nav {
-            transition: all 0.3s ease;
+            transition: all 0.1s ease;
         }
         
         .nav-link {
