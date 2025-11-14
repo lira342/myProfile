@@ -33,6 +33,10 @@
             }
 
 
-            
+            const cursor = document.querySelector('.cursor');
+            cursor.classList.add('mousemove', (e) => {
+                cursor.Style.left = e.pageX + 'px';
+                cursor.Style.top = e.pageY + 'px';
+            }); 
 
         
