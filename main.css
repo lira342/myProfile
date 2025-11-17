@@ -16,7 +16,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #1d76bb, #155a8c);
+            background: linear-gradient(90deg, #000000, #000000);
             transition: width 0.3s ease;
         }
         
@@ -50,7 +50,7 @@
         }
         
         .gradient-text {
-            background: linear-gradient(90deg, #1d76bb, #155a8c);
+            background: linear-gradient(90deg, #000000, #000000);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -60,12 +60,12 @@
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
-            background: linear-gradient(90deg, #1d76bb, #155a8c);
+            background: linear-gradient(90deg, #020202, #000000);
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(29, 118, 187, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
         
         .btn-primary::before {
@@ -85,13 +85,13 @@
         
         .input-field {
             background: rgba(30, 30, 30, 0.7);
-            border: 1px solid rgba(29, 118, 187, 0.3);
+            border: 1px solid rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
         }
         
         .input-field:focus {
             background: rgba(40, 40, 40, 0.9);
-            border-color: #1d76bb;
+            border-color: #000000;
             box-shadow: 0 0 0 3px rgba(29, 118, 187, 0.1);
             outline: none;
         }
@@ -136,14 +136,14 @@
             height: 20px;
             width: 20px;
             background: rgba(30, 30, 30, 0.7);
-            border: 1px solid rgba(29, 118, 187, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 3px;
             transition: all 0.3s ease;
         }
         
         .checkbox-container input:checked ~ .checkmark {
-            background: #1d76bb;
-            border-color: #1d76bb;
+            background: #000000;
+            border-color: #000000;
         }
         
         .checkmark:after {
@@ -168,7 +168,7 @@
         
         .spinner {
             border: 3px solid rgba(30, 30, 30, 0.7);
-            border-top: 3px solid #1d76bb;
+            border-top: 3px solid #000000;
             border-radius: 50%;
             width: 20px;
             height: 20px;
@@ -196,7 +196,7 @@
             position: relative;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(29, 118, 187, 0.2);
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.2);
         }
         
         .image-container::before {
@@ -213,17 +213,17 @@
         
         /* Custom blue color classes */
         .text-blue-primary {
-            color: #1d76bb;
+            color: #ffffff;
         }
         
         .link-blue {
-            color: #1d76bb;
+            color: #ffffff;
             transition: color 0.3s ease;
             text-decoration: none;
         }
         
         .link-blue:hover {
-            color: #4a9cd8;
+            color: #ffffff;
             text-decoration: underline;
         }
         
@@ -393,7 +393,7 @@
     }
 
     .see-details:hover {
-      background: #0078ff;
+      background: #000000;
     }
 
     @media (max-width: 768px) {
