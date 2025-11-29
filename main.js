@@ -39,4 +39,11 @@
                 cursor.Style.top = e.pageY + 'px';
             }); 
 
-        
+           
+            <div class="mobile-menu md:hidden bg-black border-t border-gray-800">
+  <div class="container mx-auto px-6 py-4 space-y-4">
+    <a href="#about-me" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-white py-2">About</a>
+    <a href="#projects" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-white py-2">Projects</a>
+    <a href="#contact" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-white py-2">Contact</a>
+  </div>
+</div>

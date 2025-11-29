@@ -368,9 +368,7 @@
             }
         }
 
-        body {
-padding: 40px 20px;
-}
+        
 h1 {
 text-align: center;
 font-size: 48px;
@@ -389,8 +387,8 @@ gap: 00px;
 background: #111;
 padding: 40px;
 border-radius: 15px;
-width: 135%;
-height: 400%;
+width: 130%;
+height: 200%;
 box-sizing: content-box;
 }
 .info-box {
@@ -515,10 +513,11 @@ align-self: flex-start;
                             </button>
                         </div>
                         
-                        <label class="checkbox-container text-sm text-gray-400 flex items-center">
-                            
-                            
-                        </label>
+                     <label class="checkbox-container text-sm text-gray-400 flex items-center">
+  <input type="checkbox" id="terms"> <!-- ADD THIS -->
+  <span class="checkmark"></span>
+  I accept the Terms and Conditions
+</label>
                     </div>
                     
                     <p id="form-message" class="text-sm mt-4"></p>
@@ -656,7 +655,8 @@ align-self: flex-start;
                     <img src="images/Screenshot 2025-11-28 165642.png" alt="ui/ux">
                     <div class="project-info">
                         <h3>UI/UX Design</h3>
-                        <p>Designing and developing responsive and intuitive mobile apps.</p>
+             
+           <p>Designing and developing responsive and intuitive mobile apps.</p>
                     </div>
                 </div>
                 
@@ -670,48 +670,78 @@ align-self: flex-start;
 
    
    <!-- Contacts Section --> 
-<section class="container">
-<h1>Contact Us</h1>
-<p class="subtitle">Ready to get started? Feel free to reach out through the contact form, and let's embark on a journey of innovation and success.</p>
+<section class="py-20 bg-black">
+  <div class="container mx-auto px-6 max-w-6xl">
+    <h1 class="text-4xl md:text-5xl font-bold text-center mb-6 text-white">Contact Us</h1>
+    <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">
+      Ready to get started? Feel free to reach out through the contact form, and let's embark on a journey of innovation and success.
+    </p>
 
+    <div class="flex flex-col lg:flex-row gap-12 items-start">
+      <!-- Contact Information Box (White Background) -->
+      <div class="lg:w-1/3 bg-white p-8 rounded-xl border border-gray-300 shadow-lg">
+        <h2 class="text-2xl font-semibold mb-4 text-black">Contact Information</h2>
+        <p class="text-gray-600 mb-6">Fill up the form and our Team will get back to you within 24 hours.</p>
+        
+        <div class="space-y-4">
+          <div class="flex items-center text-black">
+            <span class="text-xl mr-3">📞</span>
+            <span>0742320104</span>
+          </div>
+          <div class="flex items-center text-black">
+            <span class="text-xl mr-3">📧</span>
+            <span>dianelerato10@gmail.com</span>
+          </div>
+        </div>
+      </div>
 
-<div class="contact-wrapper">
-
-
-<div class="info-box">
-<h2>Contact Information</h2>
-<p>Fill up the form and our Team will get back to you within 24 hours.</p>
-
-
-<div class="info-item">📞<span>0742320104</span></div>
-<div class="info-item">📧<span>dianelerato10@gmail.com</span></div>
-</div>
-
-
-<form>
-<div class="row">
-<input placeholder="First Name" />
-<input placeholder="Last Name" />
-</div>
-<input type="email" placeholder="Email" />
-
-
-<label>What are you interested in?</label>
-<div class="options">
-<label><input type="radio" name="interest" checked /> Design</label>
-<label><input type="radio" name="interest" checked/> Development</label>
-</div>
-
-
-<textarea rows="5" placeholder="Your Message"></textarea>
-<button type="submit">SEND MESSAGE</button>
-</form>
-
-
-</div>
+      <!-- Contact Form (Black Background) -->
+      <div class="lg:w-2/3">
+        <form onsubmit="handleContactSubmit(event)" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <input type="text" placeholder="First Name" required 
+                   class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
+            <input type="text" placeholder="Last Name" required 
+                   class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
+          </div>
+          
+          <input type="email" placeholder="Email" required 
+                 class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
+          
+          <div>
+            <label class="block text-gray-300 mb-3 font-medium">What are you interested in?</label>
+            <div class="flex flex-wrap gap-6">
+              <label class="flex items-center text-gray-300 cursor-pointer">
+                <input type="radio" name="interest" value="design" class="mr-2 w-4 h-4 text-blue-600" checked>
+                Design
+              </label>
+              <label class="flex items-center text-gray-300 cursor-pointer">
+                <input type="radio" name="interest" value="development" class="mr-2 w-4 h-4 text-blue-600">
+                Development
+              </label>
+              <label class="flex items-center text-gray-300 cursor-pointer">
+                <input type="radio" name="interest" value="support" class="mr-2 w-4 h-4 text-blue-600">
+                Support
+              </label>
+              <label class="flex items-center text-gray-300 cursor-pointer">
+                <input type="radio" name="interest" value="other" class="mr-2 w-4 h-4 text-blue-600">
+                Other
+              </label>
+            </div>
+          </div>
+          
+          <textarea rows="5" placeholder="Your Message" required 
+                    class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 resize-none"></textarea>
+          
+          <button type="submit" 
+                  class="bg-black hover:bg-gray-800 text-white font-medium px-8 py-3 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/25">
+            SEND MESSAGE
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
 </section>
-
-
     <!-- Footer -->
     <footer id="contact" class="py-12 border-t border-gray-800">
         <div class="container mx-auto px-6 text-center">
@@ -798,6 +828,21 @@ align-self: flex-start;
                 follower.style.transform = 'scale(1)';
             });
         });
+
+       function handleContactSubmit(e) {
+  e.preventDefault(); // Prevent page reload
+  alert('Thank you for your message! I will get back to you soon.');
+  e.target.reset(); // Clear form
+}
+
+function handleContactSubmit(e) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  console.log('Form submitted:', Object.fromEntries(formData));
+  alert('Thank you for your message! I will get back to you within 24 hours.');
+  e.target.reset();
+}
+
     </script>
 </body>
 </html>
