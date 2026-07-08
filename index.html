@@ -1,850 +1,1314 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio-Lerato</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
-        /* CUSTOM ANIMATED CURSOR */
-        * { cursor: none; }
-        
-        .cursor {
-            position: fixed;
-            width: 8px;
-            height: 8px;
-            background: #fff;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease;
+      /* CUSTOM ANIMATED CURSOR */
+      * {
+        cursor: none;
+      }
+
+      .cursor {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        background: #fff;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transition: transform 0.1s ease;
+      }
+
+      .cursor-follower {
+        position: fixed;
+        width: 30px;
+        height: 30px;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transition: transform 0.3s ease;
+      }
+
+      /* EXISTING STYLES (CORRECTED) */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      nav {
+        transition: all 0.3s ease;
+      }
+
+      .nav-link {
+        position: relative;
+        transition: color 0.3s ease;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #1d76bb, #155a8c);
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      .mobile-menu {
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .mobile-menu.active {
+        transform: translateY(0);
+      }
+
+      .hero-bg {
+        background: linear-gradient(135deg, #000 0%, #111 100%);
+        position: relative;
+      }
+
+      .hero-bg::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+          circle at 20% 30%,
+          rgba(0, 0, 0, 0.1) 0%,
+          transparent 40%
+        );
+        pointer-events: none;
+      }
+
+      .btn-primary {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        background: linear-gradient(90deg, #000000, #ffffff);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(29, 118, 187, 0.3);
+      }
+
+      .btn-primary::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.7s;
+      }
+
+      .btn-primary:hover::before {
+        left: 100%;
+      }
+
+      .input-field {
+        background: rgba(30, 30, 30, 0.7);
+        border: 1px solid rgba(29, 118, 187, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .input-field:focus {
+        background: rgba(40, 40, 40, 0.9);
+        border-color: #000000;
+        box-shadow: 0 0 0 3px rgba(29, 118, 187, 0.1);
+        outline: none;
+      }
+
+      .client-logo {
+        filter: grayscale(100%) brightness(0.5);
+        transition: all 0.3s ease;
+        opacity: 0.6;
+      }
+
+      .client-logo:hover {
+        filter: grayscale(0%) brightness(1);
+        opacity: 1;
+        transform: scale(1.05);
+      }
+
+      .checkbox-container {
+        position: relative;
+        padding-left: 30px;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .checkbox-container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+
+      .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 20px;
+        width: 20px;
+        background: rgba(30, 30, 30, 0.7);
+        border: 1px solid rgba(29, 118, 187, 0.3);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      .checkbox-container input:checked ~ .checkmark {
+        background: #000000;
+        border-color: #050505;
+      }
+
+      .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 6px;
+        top: 2px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+
+      .checkbox-container input:checked ~ .checkmark:after {
+        display: block;
+      }
+
+      .spinner {
+        border: 3px solid rgba(30, 30, 30, 0.7);
+        border-top: 3px solid #000000;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+        display: inline-block;
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
         }
-        
-        .cursor-follower {
-            position: fixed;
-            width: 30px;
-            height: 30px;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9998;
-            transition: transform 0.3s ease;
+        100% {
+          transform: rotate(360deg);
         }
-        
-        /* EXISTING STYLES (CORRECTED) */
-        html { scroll-behavior: smooth; }
-        
-        nav {
-            transition: all 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
-        
-        .nav-link {
-            position: relative;
-            transition: color 0.3s ease;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #1d76bb, #155a8c);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
-        .mobile-menu {
-            transform: translateY(-100%);
-            transition: transform 0.3s ease;
-        }
-        
-        .mobile-menu.active {
-            transform: translateY(0);
-        }
-        
-        .hero-bg {
-            background: linear-gradient(135deg, #000 0%, #111 100%);
-            position: relative;
-        }
-        
-        .hero-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 30%, rgba(0, 0, 0, 0.1) 0%, transparent 40%);
-            pointer-events: none;
-        }
-        
-        .btn-primary {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            background: linear-gradient(90deg, #000000, #ffffff);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(29, 118, 187, 0.3);
-        }
-        
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.7s;
-        }
-        
-        .btn-primary:hover::before {
-            left: 100%;
-        }
-        
-        .input-field {
-            background: rgba(30, 30, 30, 0.7);
-            border: 1px solid rgba(29, 118, 187, 0.3);
-            transition: all 0.3s ease;
-        }
-        
-        .input-field:focus {
-            background: rgba(40, 40, 40, 0.9);
-            border-color: #000000;
-            box-shadow: 0 0 0 3px rgba(29, 118, 187, 0.1);
-            outline: none;
-        }
-        
-        .client-logo {
-            filter: grayscale(100%) brightness(0.5);
-            transition: all 0.3s ease;
-            opacity: 0.6;
-        }
-        
-        .client-logo:hover {
-            filter: grayscale(0%) brightness(1);
-            opacity: 1;
-            transform: scale(1.05);
-        }
-        
-        .checkbox-container {
-            position: relative;
-            padding-left: 30px;
-            cursor: pointer;
-            user-select: none;
-        }
-        
-        .checkbox-container input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-            height: 0;
-            width: 0;
-        }
-        
-        .checkmark {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 20px;
-            width: 20px;
-            background: rgba(30, 30, 30, 0.7);
-            border: 1px solid rgba(29, 118, 187, 0.3);
-            border-radius: 3px;
-            transition: all 0.3s ease;
-        }
-        
-        .checkbox-container input:checked ~ .checkmark {
-            background: #000000;
-            border-color: #050505;
-        }
-        
-        .checkmark:after {
-            content: "";
-            position: absolute;
-            display: none;
-            left: 6px;
-            top: 2px;
-            width: 5px;
-            height: 10px;
-            border: solid white;
-            border-width: 0 2px 2px 0;
-            transform: rotate(45deg);
-        }
-        
-        .checkbox-container input:checked ~ .checkmark:after {
-            display: block;
-        }
-        
-        .spinner {
-            border: 3px solid rgba(30, 30, 30, 0.7);
-            border-top: 3px solid #000000;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .animate-fade-in {
-            animation: fadeIn 0.8s ease forwards;
-        }
-        
-        .image-container {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(29, 118, 187, 0.2);
-        }
-        
-        .image-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(29, 118, 187, 0.1) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 1;
-        }
-        
-        .link-blue {
-            color: #000000;
-            transition: color 0.3s ease;
-            text-decoration: none;
-        }
-        
-        .link-blue:hover {
-            color: #010508;
-            text-decoration: underline;
-        }
-        
-        /* Skills Section */
-        .skills-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 20px;
-            text-align: center;
-        }
-        
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-top: 50px;
-        }
-        
-        .skill-item {
-            background: rgba(74, 156, 216, 0.1);
-            padding: 30px 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .skill-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-        
-       .skill-icon {
-    background: #fff;
-    color: #000;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 28px;
-    margin: 0 auto 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-        
-        /* Projects Section */
-        .projects-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 20px;
-            text-align: center;
-        }
-        
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-            justify-content: center;
-            align-items: start;
-        }
-        
-        .project-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            overflow: hidden;
-            text-align: left;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(29, 118, 187, 0.2);
-        }
-        
-        .project-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
-        
-        .project-info {
-            padding: 20px 25px;
-        }
-        
-        .project-info h3 {
-            font-size: 1.2em;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 10px;
-        }
-        
-        .project-info p {
-            color: #bbb;
-            font-size: 0.9em;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-        
-        .see-details {
-            display: inline-block;
-            background: #fff;
-            color: #fff;
-            font-size: 0.7em;
-            font-weight: 600;
-            padding: 6px 14px;
-            border-radius: 5px;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: background 0.3s ease;
-        }
-        
-        .see-details:hover {
-            background: #000000;
-        }
-        
-        @media (max-width: 768px) {
-            .client-logo img {
-                max-height: 30px;
-            }
-            
-            .image-container {
-                max-width: 80%;
-                margin: 0 auto;
-            }
-            
-            .project-card img {
-                height: 160px;
-            }
+      }
+
+      .animate-fade-in {
+        animation: fadeIn 0.8s ease forwards;
+      }
+
+      .image-container {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(29, 118, 187, 0.2);
+      }
+
+      .image-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(29, 118, 187, 0.1) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .link-blue {
+        color: #000000;
+        transition: color 0.3s ease;
+        text-decoration: none;
+      }
+
+      .link-blue:hover {
+        color: #010508;
+        text-decoration: underline;
+      }
+
+      /* Skills Section */
+      .skills-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 60px 20px;
+        text-align: center;
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        margin-top: 50px;
+      }
+
+      .skill-item {
+        background: rgba(74, 156, 216, 0.1);
+        padding: 30px 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .skill-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .skill-icon {
+        background: #fff;
+        color: #000;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 28px;
+        margin: 0 auto 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Projects Section */
+      .projects-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 80px 20px;
+        text-align: center;
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 40px;
+        margin-top: 60px;
+        justify-content: center;
+        align-items: start;
+      }
+
+      .project-card {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        overflow: hidden;
+        text-align: left;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+
+      .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(29, 118, 187, 0.2);
+      }
+
+      .project-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+
+      .project-info {
+        padding: 20px 25px;
+      }
+
+      .project-info h3 {
+        font-size: 1.2em;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 10px;
+      }
+
+      .project-info p {
+        color: #bbb;
+        font-size: 0.9em;
+        line-height: 1.6;
+        margin-bottom: 15px;
+      }
+
+      .gallery-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.25s ease,
+          visibility 0.25s ease;
+        z-index: 10000;
+      }
+
+      .gallery-overlay.open {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .gallery-panel {
+        width: min(100%, 960px);
+        background: #101820;
+        border-radius: 24px;
+        padding: 30px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+      }
+
+      .gallery-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: transparent;
+        border: none;
+        font-size: 32px;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      .gallery-header {
+        margin-bottom: 22px;
+      }
+
+      .gallery-header h3 {
+        color: #fff;
+        margin-bottom: 10px;
+        font-size: 1.8rem;
+      }
+
+      .gallery-description {
+        color: #ccc;
+        margin-bottom: 0;
+        font-size: 0.98rem;
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 18px;
+      }
+
+      .gallery-item {
+        display: block;
+        background: #171f28;
+        border-radius: 16px;
+        overflow: hidden;
+        text-decoration: none;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+
+      .gallery-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 22px 45px rgba(0, 0, 0, 0.28);
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .gallery-label {
+        padding: 14px 12px;
+        color: #f3f4f6;
+        font-size: 0.95rem;
+        font-weight: 600;
+      }
+
+      .see-details {
+        display: inline-block;
+        background: #fff;
+        color: #fff;
+        font-size: 0.7em;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 5px;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: background 0.3s ease;
+      }
+
+      .see-details:hover {
+        background: #000000;
+      }
+
+      @media (max-width: 768px) {
+        .client-logo img {
+          max-height: 30px;
         }
 
-        
-h1 {
-text-align: center;
-font-size: 48px;
-margin-bottom: 20px;
-}
-p.subtitle {
-text-align: center;
-font-size: 18px;
-max-width: 600px;
-margin: 0 auto 40px;
-color: #ffffff;
-}
-.contact-wrapper {
-display: flex;
-gap: 00px;
-background: #111;
-padding: 40px;
-border-radius: 15px;
-width: 130%;
-height: 200%;
-box-sizing: content-box;
-}
-.info-box {
-background: #ffffff;
-padding: 40px;
-flex: 1;
-border-radius: 10px;
-}
-.info-box h2 {
-margin-top: 0;
-font-size: 24px;
-}
-.info-item {
-display: flex;
-align-items: center;
-margin: 15px 0;
-color: #000000;
-}
-.info-item span {
-margin-left: 10px;
-font-size: 16px;
-}
-form {
-flex: 2;
-display: flex;
-flex-direction: column;
-gap: 20px;
-}
-.row {
-display: flex;
-gap: 20px;
-}
-input, textarea {
-width: 100%;
-padding: 12px;
-border: 1px solid #333;
-background: #000000;
-color: #ffffff;
-border-radius: 6px;
-}
-.options {
-display: flex;
-gap: 20px;
-margin-top: 10px;
-}
-button {
-background: #fff;
-color: #000;
-padding: 12px 24px;
-border: none;
-border-radius: 6px;
-font-size: 16px;
-cursor: pointer;
-align-self: flex-start;
-}
+        .image-container {
+          max-width: 80%;
+          margin: 0 auto;
+        }
+
+        .project-card img {
+          height: 160px;
+        }
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 48px;
+        margin-bottom: 20px;
+      }
+      p.subtitle {
+        text-align: center;
+        font-size: 18px;
+        max-width: 600px;
+        margin: 0 auto 40px;
+        color: #ffffff;
+      }
+      .contact-wrapper {
+        display: flex;
+        gap: 00px;
+        background: #111;
+        padding: 40px;
+        border-radius: 15px;
+        width: 130%;
+        height: 200%;
+        box-sizing: content-box;
+      }
+      .info-box {
+        background: #ffffff;
+        padding: 40px;
+        flex: 1;
+        border-radius: 10px;
+      }
+      .info-box h2 {
+        margin-top: 0;
+        font-size: 24px;
+      }
+      .info-item {
+        display: flex;
+        align-items: center;
+        margin: 15px 0;
+        color: #000000;
+      }
+      .info-item span {
+        margin-left: 10px;
+        font-size: 16px;
+      }
+      form {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .row {
+        display: flex;
+        gap: 20px;
+      }
+      input,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #333;
+        background: #000000;
+        color: #ffffff;
+        border-radius: 6px;
+      }
+      .options {
+        display: flex;
+        gap: 20px;
+        margin-top: 10px;
+      }
+      button {
+        background: #fff;
+        color: #000;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        align-self: flex-start;
+      }
     </style>
-</head>
-<body class="bg-black text-white overflow-x-hidden">
-    
+  </head>
+  <body class="bg-black text-white overflow-x-hidden">
     <!-- Animated Cursor Elements -->
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
-    
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <a href="index.html" class="h-8 w-auto md:h-12">
-                    <img src="images/lerato logo5.png" alt="Portfolio-Lerato" class="h-8 w-auto">
-                </a>
-                
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#about-me" class="nav-link text-gray-300 hover:text-white">About</a>
-                    <a href="#projects" class="nav-link text-gray-300 hover:text-white">Projects</a>
-                    <a href="#contact" class="nav-link text-gray-300 hover:text-white">Contact</a>
-                </div>
-                
-                <button class="md:hidden text-white" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars text-2xl"></i>
-                </button>
-            </div>
-        </div>
-        
-        <div class="mobile-menu md:hidden bg-black border-t border-gray-800">
-            <div class="container mx-auto px-6 py-4 space-y-4">
-                <a href="#about-me" class="block text-gray-300 hover:text-white py-2">About</a>
-                <a href="#projects" class="block text-gray-300 hover:text-white py-2">Projects</a>
-                <a href="#contact" class="block text-gray-300 hover:text-white py-2">Contact</a>
-            </div>
-        </div>
-    </nav>
-    
-    <!-- Hero Section -->
-    <section class="hero-bg min-h-screen flex items-center justify-center pt-20 pb-16">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16">
-                
-                <!-- Left Side: Text Content -->
-                <div class="flex-1 text-left animate-fade-in">
-                    <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-                        Welcome to my Web<br>Development & Design Portfolio!
-                    </h1>
-                    
-                    <p class="text-xl md:text-2xl text-gray-400 mb-8 font-light">
-                        I'm Lerato Diane, a passionate web developer & Designer based in SA. Here, you'll get a glimpse of my journey in the world of web development, where creativity meets functionality.
-                    </p>
-                    
-                    <!-- Email Form -->
-                    <div class="max-w-lg mb-8">
-                        <div class="flex flex-col sm:flex-row gap-4 mb-4">
-                            <input 
-                                type="email" 
-                                id="email" 
-                                placeholder="Enter your email" 
-                                class="input-field flex-1 px-4 py-3 rounded-full text-white placeholder-gray-400"
-                            >
-                            <button 
-                                class="btn-primary px-8 py-3 rounded-full text-white font-medium whitespace-nowrap"
-                                onclick="handleSubmit()"
-                            >
-                                <span id="button-text">REQUIRE OFFER</span>
-                            </button>
-                        </div>
-                        
-                     <label class="checkbox-container text-sm text-gray-400 flex items-center">
-  <input type="checkbox" id="terms"> <!-- ADD THIS -->
-  <span class="checkmark"></span>
-  I accept the Terms and Conditions
-</label>
-                    </div>
-                    
-                    <p id="form-message" class="text-sm mt-4"></p>
-                </div>
-                
-                <!-- Right Side: Photo -->
-                <div class="flex-1 flex justify-center items-center">
-                    <div class="image-container w-full max-w-md aspect-square flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800">
-                        <img src="/images/Photo%20from%20LERATO%20DIANE.jpg" alt="LERATO DIANE" class="w-full h-full object-cover rounded-lg">
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-    </section>
 
-   
+    <!-- Navigation -->
+    <nav
+      class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800"
+    >
+      <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <a href="index.html" class="h-8 w-auto md:h-12">
+            <img
+              src="images/lerato logo5.png"
+              alt="Portfolio-Lerato"
+              class="h-8 w-auto"
+            />
+          </a>
+
+          <div class="hidden md:flex items-center space-x-8">
+            <a href="#about-me" class="nav-link text-gray-300 hover:text-white"
+              >About</a
+            >
+            <a href="#projects" class="nav-link text-gray-300 hover:text-white"
+              >Projects</a
+            >
+            <a href="#contact" class="nav-link text-gray-300 hover:text-white"
+              >Contact</a
+            >
+          </div>
+
+          <button class="md:hidden text-white" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="mobile-menu md:hidden bg-black border-t border-gray-800">
+        <div class="container mx-auto px-6 py-4 space-y-4">
+          <a href="#about-me" class="block text-gray-300 hover:text-white py-2"
+            >About</a
+          >
+          <a href="#projects" class="block text-gray-300 hover:text-white py-2"
+            >Projects</a
+          >
+          <a href="#contact" class="block text-gray-300 hover:text-white py-2"
+            >Contact</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section
+      class="hero-bg min-h-screen flex items-center justify-center pt-20 pb-16"
+    >
+      <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16">
+          <!-- Left Side: Text Content -->
+          <div class="flex-1 text-left animate-fade-in">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+              Welcome to my Web<br />Development & Design Portfolio!
+            </h1>
+
+            <p class="text-xl md:text-2xl text-gray-400 mb-8 font-light">
+              I'm Lerato Diane, a passionate web developer & Designer based in
+              SA. Here, you'll get a glimpse of my journey in the world of web
+              development, where creativity meets functionality.
+            </p>
+
+            <!-- Email Form -->
+            <div class="max-w-lg mb-8">
+              <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Enter your email"
+                  class="input-field flex-1 px-4 py-3 rounded-full text-white placeholder-gray-400"
+                />
+                <button
+                  class="btn-primary px-8 py-3 rounded-full text-white font-medium whitespace-nowrap"
+                  onclick="handleSubmit()"
+                >
+                  <span id="button-text">REQUIRE OFFER</span>
+                </button>
+              </div>
+
+              <label
+                class="checkbox-container text-sm text-gray-400 flex items-center"
+              >
+                <input type="checkbox" id="terms" />
+                <!-- ADD THIS -->
+                <span class="checkmark"></span>
+                I accept the Terms and Conditions
+              </label>
+            </div>
+
+            <p id="form-message" class="text-sm mt-4"></p>
+          </div>
+
+          <!-- Right Side: Photo -->
+          <div class="flex-1 flex justify-center items-center">
+            <div
+              class="image-container w-full max-w-md aspect-square flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800"
+            >
+              <img
+                src="/images/Photo%20from%20LERATO%20DIANE.jpg"
+                alt="LERATO DIANE"
+                class="w-full h-full object-cover rounded-lg"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- About Section -->
     <section id="about-me" class="py-20">
-        <div class="container mx-auto px-6 text-center">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">About Me</h1>
-            <h2 class="text-xl text-gray-400 max-w-3xl mx-auto">
-                I'm not just a developer; I'm a digital dreamweaver. Crafting immersive online experiences and designing logos and corporate identity isn't just my job, it's my calling. I also create print materials to keep your brand consistent everywhere. Discover below how I can help you.
-            </h2>
-        </div>
+      <div class="container mx-auto px-6 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+          About Me
+        </h1>
+        <h2 class="text-xl text-gray-400 max-w-3xl mx-auto">
+          I'm not just a developer; I'm a digital dreamweaver. Crafting
+          immersive online experiences and designing logos and corporate
+          identity isn't just my job, it's my calling. I also create print
+          materials to keep your brand consistent everywhere. Discover below how
+          I can help you.
+        </h2>
+      </div>
     </section>
 
     <!-- What I Do Section -->
     <section class="skills-section">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl md:text-6xl font-bold mb-6 leading-tight text-center">What I Do</h2>
-            <p class="text-center text-gray-400">I create websites, i also design logos, corporate identity, brochure design</p>
-            
-            <div class="skills-grid">
-                <div class="skill-item">
-                    <div class="skill-icon"><i class="fas fa-laptop-code"></i></div>
-                    <h3>Web Development</h3>
-                    <p>Creating beautiful and functional web experiences using the latest technologies and best practices.</p>
-                </div>
-                
-                <div class="skill-item">
-                    <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
-                    <h3>UI/UX Design</h3>
-                    <p>Designing and developing responsive and intuitive mobile apps.</p>
-                </div>
-                
-                <div class="skill-item">
-                    <div class="skill-icon"><i class="fas fa-mug-hot"></i></div>
-                    <h3>Logo design</h3>
-                    <p>Creating logos for businesses or individuals.</p>
-                </div>
-                
-                <div class="skill-item">
-                    <div class="skill-icon"><i class="fas fa-user-check"></i></div>
-                    <h3>Corporate identity</h3>
-                    <p>Designing business card, Letterhead and promotional items for businesses/companies.</p>
-                </div>
-            </div>
+      <div class="container mx-auto px-6">
+        <h2
+          class="text-4xl md:text-6xl font-bold mb-6 leading-tight text-center"
+        >
+          What I Do
+        </h2>
+        <p class="text-center text-gray-400">
+          I create websites, i also design logos, corporate identity, brochure
+          design
+        </p>
+
+        <div class="skills-grid">
+          <div class="skill-item">
+            <div class="skill-icon"><i class="fas fa-laptop-code"></i></div>
+            <h3>Web Development</h3>
+            <p>
+              Creating beautiful and functional web experiences using the latest
+              technologies and best practices.
+            </p>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
+            <h3>UI/UX Design</h3>
+            <p>
+              Designing and developing responsive and intuitive mobile apps.
+            </p>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-icon"><i class="fas fa-user-check"></i></div>
+            <h3>Corporate identity</h3>
+            <p>
+              Designing business card, Letterhead and promotional items for
+              businesses/companies.
+            </p>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Projects Section -->
     <section id="projects" class="projects-section">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl md:text-6xl font-bold mb-6 leading-tight text-center">My Projects</h2>
-            <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">
-                Whether you have a mobile app idea that needs to come to life or a website that requires a facelift, I'm here to turn your digital dreams into reality.
+      <div class="container mx-auto px-6">
+        <h2
+          class="text-4xl md:text-6xl font-bold mb-6 leading-tight text-center"
+        >
+          My Projects
+        </h2>
+        <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">
+          Whether you have a mobile app idea that needs to come to life or a
+          website that requires a facelift, I'm here to turn your digital dreams
+          into reality.
+        </p>
+
+        <div class="projects-grid">
+          <div class="project-card" data-gallery-key="web-dev">
+            <img
+              src="/images/Screenshot%202025-10-31%20143226.png"
+              alt="website project"
+            />
+            <div class="project-info">
+              <h3>Web Development</h3>
+              <p>
+                Creating beautiful and functional web experiences using the
+                latest technologies and best practices.
+              </p>
+            </div>
+          </div>
+
+          <div class="project-card" data-gallery-key="ui-ux">
+            <img
+              src="images/Screenshot%202025-10-23%20011120.png"
+              alt="ui/ux"
+            />
+            <div class="project-info">
+              <h3>UI/UX Design</h3>
+              <p>
+                Designing and developing responsive and intuitive mobile apps.
+              </p>
+            </div>
+          </div>
+
+          <div class="project-card" data-gallery-key="logo-design">
+            <img
+              src="images/Screenshot%202025-10-31%20145359.png"
+              alt="logo design"
+            />
+            <div class="project-info">
+              <h3>Logo Design</h3>
+              <p>Creating logos for businesses or individuals.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="projects-grid">
+          <div class="project-card" data-gallery-key="branding">
+            <img
+              src="/images/Screenshot 2025-10-31 143840.png"
+              alt="website project"
+            />
+            <div class="project-info">
+              <h3>Branding</h3>
+              <p>Creating beautiful mockups.</p>
+            </div>
+          </div>
+
+          <div class="project-card" data-gallery-key="brochure-design">
+            <img src="images/Screenshot 2025-11-05 170005.png" alt="ui/ux" />
+            <div class="project-info">
+              <h3>Brochure design</h3>
+              <p>Brochure for businesses.</p>
+            </div>
+          </div>
+
+          <div class="project-card" data-gallery-key="website-design">
+            <img
+              src="images/Screenshot 2025-11-25 102119.png"
+              alt="logo design"
+            />
+            <div class="project-info">
+              <h3>Website Design</h3>
+              <p>Creating website designs for individuals and businesses.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="projects-grid">
+          <div class="project-card" data-gallery-key="business-card">
+            <img
+              src="/images/Screenshot 2025-11-28 170741.png"
+              alt="website project"
+            />
+            <div class="project-info">
+              <h3>Business card</h3>
+              <p>Creating business cards.</p>
+            </div>
+          </div>
+
+          <div class="project-card" data-gallery-key="ui-ux-2">
+            <img src="images/Screenshot 2025-11-28 165642.png" alt="ui/ux" />
+            <div class="project-info">
+              <h3>UI/UX Design</h3>
+              <p>
+                Designing and developing responsive and intuitive mobile apps.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="project-gallery-overlay"
+        class="gallery-overlay"
+        aria-hidden="true"
+      >
+        <div class="gallery-panel">
+          <button
+            class="gallery-close"
+            type="button"
+            onclick="closeProjectGallery()"
+            aria-label="Close gallery"
+          >
+            ×
+          </button>
+          <div class="gallery-header">
+            <h3 id="gallery-title">Project Gallery</h3>
+            <p id="gallery-description" class="gallery-description">
+              Click one of the items below to view the live project or example
+              page.
             </p>
-            
-            <div class="projects-grid">
-                <div class="project-card">
-                    <img src="/images/Screenshot%202025-10-31%20143226.png" alt="website project">
-                    <div class="project-info">
-                        <h3>Web Development</h3>
-                        <p>Creating beautiful and functional web experiences using the latest technologies and best practices.</p>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <img src="images/Screenshot%202025-10-23%20011120.png" alt="ui/ux">
-                    <div class="project-info">
-                        <h3>UI/UX Design</h3>
-                        <p>Designing and developing responsive and intuitive mobile apps.</p>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <img src="images/Screenshot%202025-10-31%20145359.png" alt="logo design">
-                    <div class="project-info">
-                        <h3>Logo Design</h3>
-                        <p>Creating logos for businesses or individuals.</p>
-                        
-                    </div>
-                </div>
-            </div>
-
-             <div class="projects-grid">
-                <div class="project-card">
-                    <img src="/images/Screenshot 2025-10-31 143840.png" alt="website project">
-                    <div class="project-info">
-                        <h3>Branding</h3>
-                        <p>Creating beautiful mockups </p>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <img src="images/Screenshot 2025-11-05 170005.png" alt="ui/ux">
-                    <div class="project-info">
-                        <h3>Brochure design</h3>
-                        <p>Brochure for businesses</p>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <img src="images/Screenshot 2025-11-25 102119.png" alt="logo design">
-                    <div class="project-info">
-                        <h3>Website  Design</h3>
-                        <p>Creating website designs for individuals and businesses</p>
-                        
-                    </div>
-                </div>
-            </div>
-
-  <div class="projects-grid">
-                <div class="project-card">
-                    <img src="/images/Screenshot 2025-11-28 170741.png" alt="website project">
-                    <div class="project-info">
-                        <h3>Business card</h3>
-                        <p>Creating business card</p>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <img src="images/Screenshot 2025-11-28 165642.png" alt="ui/ux">
-                    <div class="project-info">
-                        <h3>UI/UX Design</h3>
-             
-           <p>Designing and developing responsive and intuitive mobile apps.</p>
-                    </div>
-                </div>
-                
-                
-                </div>
-            </div>
-
+          </div>
+          <div class="gallery-grid" id="gallery-list"></div>
         </div>
-        </div>
+      </div>
     </section>
 
-   
-   <!-- Contacts Section --> 
-<section class="py-20 bg-black">
-  <div class="container mx-auto px-6 max-w-6xl">
-    <h1 class="text-4xl md:text-5xl font-bold text-center mb-6 text-white">Contact Us</h1>
-    <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">
-      Ready to get started? Feel free to reach out through the contact form, and let's embark on a journey of innovation and success.
-    </p>
+    <!-- Contacts Section -->
+    <section class="py-20 bg-black">
+      <div class="container mx-auto px-6 max-w-6xl">
+        <h1 class="text-4xl md:text-5xl font-bold text-center mb-6 text-white">
+          Contact Us
+        </h1>
+        <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">
+          Ready to get started? Feel free to reach out through the contact form,
+          and let's embark on a journey of innovation and success.
+        </p>
 
-    <div class="flex flex-col lg:flex-row gap-12 items-start">
-      <!-- Contact Information Box (White Background) -->
-      <div class="lg:w-1/3 bg-white p-8 rounded-xl border border-gray-300 shadow-lg">
-        <h2 class="text-2xl font-semibold mb-4 text-black">Contact Information</h2>
-        <p class="text-gray-600 mb-6">Fill up the form and our Team will get back to you within 24 hours.</p>
-        
-        <div class="space-y-4">
-          <div class="flex items-center text-black">
-            <span class="text-xl mr-3">📞</span>
-            <span>0742320104</span>
-          </div>
-          <div class="flex items-center text-black">
-            <span class="text-xl mr-3">📧</span>
-            <span>dianelerato10@gmail.com</span>
-          </div>
-        </div>
-      </div>
+        <div class="flex flex-col lg:flex-row gap-12 items-start">
+          <!-- Contact Information Box (White Background) -->
+          <div
+            class="lg:w-1/3 bg-white p-8 rounded-xl border border-gray-300 shadow-lg"
+          >
+            <h2 class="text-2xl font-semibold mb-4 text-black">
+              Contact Information
+            </h2>
+            <p class="text-gray-600 mb-6">
+              Fill up the form and our Team will get back to you within 24
+              hours.
+            </p>
 
-      <!-- Contact Form (Black Background) -->
-      <div class="lg:w-2/3">
-        <form onsubmit="handleContactSubmit(event)" class="space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <input type="text" placeholder="First Name" required 
-                   class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
-            <input type="text" placeholder="Last Name" required 
-                   class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
-          </div>
-          
-          <input type="email" placeholder="Email" required 
-                 class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
-          
-          <div>
-            <label class="block text-gray-300 mb-3 font-medium">What are you interested in?</label>
-            <div class="flex flex-wrap gap-6">
-              <label class="flex items-center text-gray-300 cursor-pointer">
-                <input type="radio" name="interest" value="design" class="mr-2 w-4 h-4 text-blue-600" checked>
-                Design
-              </label>
-              <label class="flex items-center text-gray-300 cursor-pointer">
-                <input type="radio" name="interest" value="development" class="mr-2 w-4 h-4 text-blue-600">
-                Development
-              </label>
-              <label class="flex items-center text-gray-300 cursor-pointer">
-                <input type="radio" name="interest" value="support" class="mr-2 w-4 h-4 text-blue-600">
-                Support
-              </label>
-              <label class="flex items-center text-gray-300 cursor-pointer">
-                <input type="radio" name="interest" value="other" class="mr-2 w-4 h-4 text-blue-600">
-                Other
-              </label>
+            <div class="space-y-4">
+              <div class="flex items-center text-black">
+                <span class="text-xl mr-3">📞</span>
+                <span>0742320104</span>
+              </div>
+              <div class="flex items-center text-black">
+                <span class="text-xl mr-3">📧</span>
+                <span>dianelerato10@gmail.com</span>
+              </div>
             </div>
           </div>
-          
-          <textarea rows="5" placeholder="Your Message" required 
-                    class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 resize-none"></textarea>
-          
-          <button type="submit" 
-                  class="bg-black hover:bg-gray-800 text-white font-medium px-8 py-3 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/25">
-            SEND MESSAGE
-          </button>
-        </form>
+
+          <!-- Contact Form (Black Background) -->
+          <div class="lg:w-2/3">
+            <form onsubmit="handleContactSubmit(event)" class="space-y-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <input
+                  type="text"
+                  placeholder="First Name"
+                  required
+                  class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                />
+                <input
+                  type="text"
+                  placeholder="Last Name"
+                  required
+                  class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                />
+              </div>
+
+              <input
+                type="email"
+                placeholder="Email"
+                required
+                class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+              />
+
+              <div>
+                <label class="block text-gray-300 mb-3 font-medium"
+                  >What are you interested in?</label
+                >
+                <div class="flex flex-wrap gap-6">
+                  <label class="flex items-center text-gray-300 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="interest"
+                      value="design"
+                      class="mr-2 w-4 h-4 text-blue-600"
+                      checked
+                    />
+                    Design
+                  </label>
+                  <label class="flex items-center text-gray-300 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="interest"
+                      value="development"
+                      class="mr-2 w-4 h-4 text-blue-600"
+                    />
+                    Development
+                  </label>
+                  <label class="flex items-center text-gray-300 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="interest"
+                      value="support"
+                      class="mr-2 w-4 h-4 text-blue-600"
+                    />
+                    Support
+                  </label>
+                  <label class="flex items-center text-gray-300 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="interest"
+                      value="other"
+                      class="mr-2 w-4 h-4 text-blue-600"
+                    />
+                    Other
+                  </label>
+                </div>
+              </div>
+
+              <textarea
+                rows="5"
+                placeholder="Your Message"
+                required
+                class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 resize-none"
+              ></textarea>
+
+              <button
+                type="submit"
+                class="bg-black hover:bg-gray-800 text-white font-medium px-8 py-3 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/25"
+              >
+                SEND MESSAGE
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
     <!-- Footer -->
     <footer id="contact" class="py-12 border-t border-gray-800">
-        <div class="container mx-auto px-6 text-center">
-            <p class="text-gray-400">© 2025 Lerato Diane. All rights reserved.</p>
-        </div>
+      <div class="container mx-auto px-6 text-center">
+        <p class="text-gray-400">© 2025 Lerato Diane. All rights reserved.</p>
+      </div>
     </footer>
 
     <script>
-        // MOBILE MENU TOGGLE
-        function toggleMobileMenu() {
-            const mobileMenu = document.querySelector('.mobile-menu');
-            mobileMenu.classList.toggle('active');
+      // MOBILE MENU TOGGLE
+      function toggleMobileMenu() {
+        const mobileMenu = document.querySelector(".mobile-menu");
+        mobileMenu.classList.toggle("active");
+      }
+
+      // FORM SUBMISSION
+      function handleSubmit() {
+        const email = document.getElementById("email").value;
+        const terms = document.getElementById("terms").checked;
+        const messageEl = document.getElementById("form-message");
+        const buttonText = document.getElementById("button-text");
+
+        messageEl.className = "text-sm mt-4";
+
+        if (!email) {
+          messageEl.textContent = "Please enter your email address.";
+          messageEl.classList.add("text-red-400");
+          return;
         }
-        
-        // FORM SUBMISSION
-        function handleSubmit() {
-            const email = document.getElementById('email').value;
-            const terms = document.getElementById('terms').checked;
-            const messageEl = document.getElementById('form-message');
-            const buttonText = document.getElementById('button-text');
-            
-            messageEl.className = 'text-sm mt-4';
-            
-            if (!email) {
-                messageEl.textContent = 'Please enter your email address.';
-                messageEl.classList.add('text-red-400');
-                return;
-            }
-            
-            if (!terms) {
-                messageEl.textContent = 'Please accept the Terms and Conditions.';
-                messageEl.classList.add('text-red-400');
-                return;
-            }
-            
-            const emailRegex = /^\S+@\S+\.\S+$/;
-            if (!emailRegex.test(email)) {  
-                messageEl.textContent = 'Please enter a valid email address.';
-                messageEl.classList.add('text-red-400');
-                return;
-            }
-            
-            // Success simulation
-            messageEl.textContent = 'Thank you! I will contact you soon.';
-            messageEl.classList.add('text-green-400');
+
+        if (!terms) {
+          messageEl.textContent = "Please accept the Terms and Conditions.";
+          messageEl.classList.add("text-red-400");
+          return;
         }
-        
-        // ANIMATED CURSOR
-        const cursor = document.querySelector('.cursor');
-        const follower = document.querySelector('.cursor-follower');
-        
-        let mouseX = 0;
-        let mouseY = 0;
-        let followerX = 0;
-        let followerY = 0;
-        
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-        
-        function animateCursor() {
-            followerX += (mouseX - followerX) * 0.1;
-            followerY += (mouseY - followerY) * 0.1;
-            
-            cursor.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
-            follower.style.transform = `translate(${followerX - 15}px, ${followerY - 15}px)`;
-            
-            requestAnimationFrame(animateCursor);
+
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if (!emailRegex.test(email)) {
+          messageEl.textContent = "Please enter a valid email address.";
+          messageEl.classList.add("text-red-400");
+          return;
         }
-        
-        animateCursor();
-        
-        // HOVER EFFECTS
-        const interactiveElements = document.querySelectorAll('a, button, .project-card, .skill-item');
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(1.8)';
-                follower.style.transform = 'scale(1.5)';
-            });
-            
-            el.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'scale(1)';
-                follower.style.transform = 'scale(1)';
-            });
+
+        // Success simulation
+        messageEl.textContent = "Thank you! I will contact you soon.";
+        messageEl.classList.add("text-green-400");
+      }
+
+      // ANIMATED CURSOR
+      const cursor = document.querySelector(".cursor");
+      const follower = document.querySelector(".cursor-follower");
+
+      let mouseX = 0;
+      let mouseY = 0;
+      let followerX = 0;
+      let followerY = 0;
+
+      document.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      function animateCursor() {
+        followerX += (mouseX - followerX) * 0.1;
+        followerY += (mouseY - followerY) * 0.1;
+
+        cursor.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
+        follower.style.transform = `translate(${followerX - 15}px, ${followerY - 15}px)`;
+
+        requestAnimationFrame(animateCursor);
+      }
+
+      animateCursor();
+
+      // HOVER EFFECTS
+      const interactiveElements = document.querySelectorAll(
+        "a, button, .project-card, .skill-item",
+      );
+      interactiveElements.forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          cursor.style.transform = "scale(1.8)";
+          follower.style.transform = "scale(1.5)";
         });
 
-       function handleContactSubmit(e) {
-  e.preventDefault(); // Prevent page reload
-  alert('Thank you for your message! I will get back to you soon.');
-  e.target.reset(); // Clear form
-}
+        el.addEventListener("mouseleave", () => {
+          cursor.style.transform = "scale(1)";
+          follower.style.transform = "scale(1)";
+        });
+      });
 
-function handleContactSubmit(e) {
-  e.preventDefault();
-  const formData = new FormData(e.target);
-  console.log('Form submitted:', Object.fromEntries(formData));
-  alert('Thank you for your message! I will get back to you within 24 hours.');
-  e.target.reset();
-}
+      const projectGalleryData = {
+        "web-dev": {
+          title: "Web Development Gallery",
+          description:
+            "Explore additional web project examples and open the live pages.",
+          items: [
+            {
+              src: "images/Screenshot%202025-10-31%20143226.png",
+              label: "Live Web Project",
+              href: "https://lira-profile.vercel.app/",
+            },
+            {
+              src: "images/Screenshot%202026-07-08%20164910.png",
+              label: "landing page development",
+              href: "https://marvin-six.vercel.app/three.html",
+            },
+            {
+              src: "images/Screenshot%202026-07-08%20170427.png",
+              label: "Weather web app",
+              href: "https://weather-advice-app.vercel.app",
+            },
+            {
+              src: "images/Screenshot%202026-07-08%20171441.png",
+              label: "Egyptian website",
+              href: "https://ancient-egypt-five.vercel.app/",
+            },
+          ],
+        },
+        "ui-ux": {
+          title: "UI/UX Gallery",
+          description: "Select a preview to visit the related project page.",
+          items: [
+            {
+              src: "images/Screenshot%202025-10-23%20011120.png",
+              label: "Mobile App UI",
+              href: "https://example.com/uiux-app",
+            },
+            {
+              src: "images/Screenshot%202025-11-05%20170005.png",
+              label: "Brochure UI",
+              href: "https://example.com/brochure",
+            },
+          ],
+        },
+        "logo-design": {
+          title: "Logo Design Gallery",
+          description: "Click through to explore logo design case studies.",
+          items: [
+            {
+              src: "images/Screenshot%202025-10-31%20145359.png",
+              label: "Business Logo",
+              href: "https://example.com/logo-design",
+            },
+            {
+              src: "images/Screenshot%202025-11-28%20170741.png",
+              label: "Card Layout",
+              href: "https://example.com/business-card",
+            },
+          ],
+        },
+        branding: {
+          title: "Branding Gallery",
+          description: "Open these branding examples to view full details.",
+          items: [
+            {
+              src: "images/Screenshot 2025-10-31 143840.png",
+              label: "Brand Mockup",
+              href: "https://example.com/branding-page",
+            },
+            {
+              src: "images/Screenshot%202025-11-28%20165642.png",
+              label: "UI Prototype",
+              href: "https://example.com/ui-prototype",
+            },
+          ],
+        },
+        "brochure-design": {
+          title: "Brochure Gallery",
+          description: "Select a brochure example to visit the project link.",
+          items: [
+            {
+              src: "images/Screenshot%202025-11-05%20170005.png",
+              label: "Brochure Example",
+              href: "https://example.com/brochure-design",
+            },
+            {
+              src: "images/Screenshot%202025-11-25%20102119.png",
+              label: "Web Design Brochure",
+              href: "https://example.com/web-brochure",
+            },
+          ],
+        },
+        "website-design": {
+          title: "Website Design Gallery",
+          description:
+            "Click an image to open the website project in a new tab.",
+          items: [
+            {
+              src: "images/Screenshot%202025-11-25%20102119.png",
+              label: "Website Mockup",
+              href: "https://example.com/website-design",
+            },
+            {
+              src: "images/Screenshot%202025-11-28%20170741.png",
+              label: "Landing Page",
+              href: "https://example.com/landing-page",
+            },
+          ],
+        },
+        "business-card": {
+          title: "Business Card Gallery",
+          description:
+            "Open the design examples for business card and branding work.",
+          items: [
+            {
+              src: "/images/Screenshot 2025-11-28 170741.png",
+              label: "Business Card Design",
+              href: "https://example.com/business-card",
+            },
+            {
+              src: "images/Screenshot%202025-11-28%20165642.png",
+              label: "Branding Concept",
+              href: "https://example.com/brand-concept",
+            },
+          ],
+        },
+        "ui-ux-2": {
+          title: "UI/UX Gallery",
+          description: "Select a design to open its detailed project link.",
+          items: [
+            {
+              src: "images/Screenshot%202025-11-28%20165642.png",
+              label: "Second UI/UX Example",
+              href: "https://example.com/uiux-2",
+            },
+            {
+              src: "images/Screenshot%202025-11-25%20102119.png",
+              label: "Website UI Example",
+              href: "https://example.com/website-ui",
+            },
+          ],
+        },
+      };
 
+      const galleryOverlay = document.getElementById("project-gallery-overlay");
+      const galleryList = document.getElementById("gallery-list");
+      const galleryTitle = document.getElementById("gallery-title");
+      const galleryDescription = document.getElementById("gallery-description");
+
+      function renderProjectGallery(key) {
+        const gallery = projectGalleryData[key];
+        if (!gallery) return;
+
+        galleryTitle.textContent = gallery.title;
+        galleryDescription.textContent = gallery.description;
+        galleryList.innerHTML = "";
+
+        gallery.items.forEach((item) => {
+          const link = document.createElement("a");
+          link.href = item.href;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.className = "gallery-item";
+          link.innerHTML = `
+                    <img src="${item.src}" alt="${item.label}">
+                    <div class="gallery-label">${item.label}</div>
+                `;
+          galleryList.appendChild(link);
+        });
+
+        galleryOverlay.classList.add("open");
+        galleryOverlay.setAttribute("aria-hidden", "false");
+      }
+
+      function closeProjectGallery() {
+        galleryOverlay.classList.remove("open");
+        galleryOverlay.setAttribute("aria-hidden", "true");
+      }
+
+      document
+        .querySelectorAll(".project-card[data-gallery-key]")
+        .forEach((card) => {
+          card.addEventListener("click", () => {
+            const key = card.getAttribute("data-gallery-key");
+            renderProjectGallery(key);
+          });
+        });
+
+      galleryOverlay.addEventListener("click", (event) => {
+        if (event.target === galleryOverlay) {
+          closeProjectGallery();
+        }
+      });
+
+      function handleContactSubmit(e) {
+        e.preventDefault(); // Prevent page reload
+        alert("Thank you for your message! I will get back to you soon.");
+        e.target.reset(); // Clear form
+      }
+
+      function handleContactSubmit(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        console.log("Form submitted:", Object.fromEntries(formData));
+        alert(
+          "Thank you for your message! I will get back to you within 24 hours.",
+        );
+        e.target.reset();
+      }
     </script>
-</body>
+  </body>
 </html>
